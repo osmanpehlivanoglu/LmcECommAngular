@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+  .add-img-card {
+    width: 50% !important;
+  }
+}
+@media (max-width: 500px) {
+  .add-img-card {
+    width: 100% !important;
+  }
+  .add-img-card img {
+    width: 80% !important;
+  }
+}

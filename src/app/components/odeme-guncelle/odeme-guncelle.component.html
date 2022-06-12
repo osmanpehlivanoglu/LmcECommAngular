@@ -1,0 +1,140 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Ödeme Düzenle</h4>
+</div>
+
+<div class="container" style="width: 600px">
+  <div class="row">
+    <div class="input-group mb-3 input-group-sm">
+      <span class="input-group-text" id="basic-addon1" style="width: 160px"
+        >Ödeme Türü</span
+      >
+      <select class="form-select" (change)="updateSeciliOdeme($event)">
+        <option selected value="0">Ödeme Türü Seç</option>
+        <option value="1">Ödeme Yap</option>
+        <option value="2">Ödeme Al</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<br />
+
+<table class="table table-hover" *ngIf="yapilanOdemeler.length > 0">
+  <thead class="thead">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tarih</th>
+      <th scope="col">Toptancı</th>
+      <th scope="col">Miktar</th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="yapilanOdemeler.length > 0">
+    <tr *ngFor="let yapilanOdeme of yapilanOdemeler; let i = index">
+      <th scope="row" class="align-middle">
+        {{ i + 1 }}
+      </th>
+      <td class="align-middle">
+        {{ yapilanOdeme.tarih | date: "medium" }}
+      </td>
+      <td class="align-middle">
+        {{ yapilanOdeme.toptanciId }}
+      </td>
+
+      <td class="align-middle">
+        <div class="input-group mb-3 input-group-sm">
+          <input
+            type="number"
+            class="form-control"
+            aria-label="Example text with button addon"
+            aria-describedby="button-addon1"
+            [(ngModel)]="yapilanOdeme.miktar"
+            (change)="guncel_miktar($event)"
+            (click)="guncel_miktar($event)"
+          />
+          <div
+            class="btn-group btn-group-sm"
+            role="group"
+            aria-label="Basic outlined example"
+          >
+            <button
+              (click)="guncelle(yapilanOdeme.yapilanOdemeId)"
+              class="btn btn-outline-success btn-kucuk"
+            >
+              <i class="bi bi-arrow-repeat"></i>
+            </button>
+
+            <button
+              (click)="iptal(yapilanOdeme.yapilanOdemeId)"
+              class="btn btn-outline-danger btn-kucuk"
+            >
+              <i class="bi bi-bag-x"></i>
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-hover" *ngIf="alinanOdemeler.length > 0">
+  <thead class="thead">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tarih</th>
+      <th scope="col">Müşteri</th>
+      <th scope="col">Miktar</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="alinanOdemeler.length > 0">
+    <tr *ngFor="let alinanOdeme of alinanOdemeler; let i = index">
+      <th scope="row" class="align-middle">
+        {{ i + 1 }}
+      </th>
+      <td class="align-middle">
+        {{ alinanOdeme.tarih | date: "medium" }}
+      </td>
+      <td class="align-middle">
+        {{ alinanOdeme.musteriId }}
+      </td>
+
+      <td class="align-middle">
+        <div class="input-group mb-3 input-group-sm">
+          <input
+            type="number"
+            class="form-control"
+            aria-label="Example text with button addon"
+            aria-describedby="button-addon1"
+            [(ngModel)]="alinanOdeme.miktar"
+            (change)="guncel_miktar($event)"
+          />
+          <div
+            class="btn-group btn-group-sm"
+            role="group"
+            aria-label="Basic outlined example"
+          >
+            <button
+              (click)="guncelle(alinanOdeme.alinanOdemeId)"
+              class="btn btn-outline-success btn-kucuk"
+            >
+              <i class="bi bi-arrow-repeat"></i>
+            </button>
+
+            <button
+              (click)="iptal(alinanOdeme.alinanOdemeId)"
+              class="btn btn-outline-danger btn-kucuk"
+            >
+              <i class="bi bi-bag-x"></i>
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br />

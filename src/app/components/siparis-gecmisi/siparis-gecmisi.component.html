@@ -1,0 +1,62 @@
+<br /><br />
+<div class="row text-center">
+  <h4>Sipariş Geçmişi</h4>
+</div>
+<br />
+
+<div *ngIf="urunlerDetayOnayli.length === 0" style="text-align: center">
+  <i>Sipariş bulunamadı...</i>
+</div>
+<div class="d-flex justify-content-between">
+  <button
+    type="button"
+    class="btn btn-outline-dark btn-sm"
+    style="width: 200px"
+    routerLink="/profil"
+  >
+    Güncel Siparişler
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-success btn-sm"
+    style="width: 200px"
+    routerLink="/profil/profil-duzenle"
+  >
+    Profil Düzenle
+  </button>
+</div>
+<br />
+<table class="table" *ngIf="urunlerDetayOnayli.length > 0">
+  <thead class="thead">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Ürün</th>
+      <th scope="col">Fiyat</th>
+      <th scope="col">Adet</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let urun of urunlerDetayOnayli; let i = index">
+      <th scope="row" class="align-middle">{{ i + 1 }}</th>
+      <td class="align-middle">
+        {{ urun.urunAdi }}
+      </td>
+      <td class="align-middle">{{ sepetOnayli[i].fiyat }}</td>
+      <td>
+        {{ sepetOnayli[i].adet }}
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <div class="d-flex justify-content-end" style="font-weight: 500">
+          Toplam: $ {{ sepetFiyatiOnayli.toFixed(2) }}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />

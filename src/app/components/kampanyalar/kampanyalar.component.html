@@ -1,0 +1,258 @@
+<br />
+<br />
+<br />
+<div class="input-group mb-3">
+  <input
+    type="text"
+    [(ngModel)]="filterText"
+    class="form-control"
+    id="filterTextUrun"
+    placeholder="Aranacak ifadeyi giriniz..."
+  />
+
+  <button
+    class="btn btn-outline-secondary dropdown-toggle"
+    type="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    Gösterim Türü
+  </button>
+  <ul class="dropdown-menu">
+    <li>
+      <a
+        class="dropdown-item"
+        (click)="getFiyatArtan()"
+        href="javascript:void(0)"
+        >Fiyat Artan</a
+      >
+    </li>
+    <li>
+      <a
+        class="dropdown-item"
+        (click)="getFiyatAzalan()"
+        href="javascript:void(0)"
+        >Fiyat Azalan</a
+      >
+    </li>
+    <li><hr class="dropdown-divider" /></li>
+    <li>
+      <a
+        class="dropdown-item"
+        (click)="getTarihArtan()"
+        href="javascript:void(0)"
+        >Tarih Artan</a
+      >
+    </li>
+    <li>
+      <a
+        class="dropdown-item"
+        (click)="getTarihAzalan()"
+        href="javascript:void(0)"
+        >Tarih Azalan</a
+      >
+    </li>
+  </ul>
+</div>
+
+<div class="row">
+  <div
+    class="col1 col-lg-4 col-sm-6"
+    *ngFor="let urun of urunlerKampanyaliSon | urunFilter: filterText"
+  >
+    <div class="card">
+      <div class="card-img">
+        <a href="/urunler/{{ urun.urunId }}">
+          <img
+            *ngIf="urun.urunResmi"
+            [src]="resimUrl + urun.urunResmi"
+            class="card-img-top"
+          />
+          <img
+            *ngIf="!urun.urunResmi"
+            src="assets/logoLmcT.png"
+            class="card-img-top"
+          />
+        </a>
+        <i
+          *ngIf="!kullaniciBegenileri.includes(urun.urunId)"
+          class="bi bi-heart"
+          (click)="begeniEkle(urun.urunId)"
+        ></i>
+        <i
+          *ngIf="kullaniciBegenileri.includes(urun.urunId)"
+          class="bi bi-heart-fill"
+          (click)="
+            begeniCikar(begeniIdleri[kullaniciBegenileri.indexOf(urun.urunId)])
+          "
+        ></i>
+      </div>
+      <div class="card-body">
+        <h5 class="card-text">
+          <a href="">{{ urun.urunAdi | titlecase }}</a>
+        </h5>
+        <h6 class="card-text">{{ urun.kategoriAdi | titlecase }}</h6>
+
+        <p class="card-text">
+          {{ urun.markaAdi | titlecase }}
+        </p>
+
+        <h6 class="card-text" *ngIf="kullaniciYetkiId === 0">
+          {{ urun.perakendeFiyati }}
+        </h6>
+
+        <h6 class="card-text" *ngIf="kullaniciYetkiId === 1">
+          {{ urun.alisFiyati }}
+        </h6>
+
+        <h6 class="card-text" *ngIf="kullaniciYetkiId === 2">
+          {{ urun.toptanciFiyati }}
+        </h6>
+
+        <h6 class="card-text" *ngIf="kullaniciYetkiId === 3">
+          {{ urun.bayiFiyati }}
+        </h6>
+
+        <div class="btn-style-group">
+          <a
+            class="btn-style btn"
+            *ngIf="
+              kullaniciYetkiId === 0 &&
+              !kampanyaliUrunIdleri.includes(urun.urunId)
+            "
+            (click)="sepete_ekle(urun.urunId, urun.perakendeFiyati)"
+            ><i
+              class="bi bi-basket2"
+              style="font-size: 20px; margin-right: 10px"
+            ></i>
+            Sepete Ekle</a
+          >
+
+          <a
+            class="btn-style btn"
+            *ngIf="
+              kullaniciYetkiId === 0 &&
+              kampanyaliUrunIdleri.includes(urun.urunId)
+            "
+            (click)="
+              sepete_ekle(
+                urun.urunId,
+                urun.perakendeFiyati -
+                  urun.perakendeFiyati *
+                    (yuzdeler[kampanyaliUrunIdleri.indexOf(urun.urunId)] / 100)
+              )
+            "
+            ><i
+              class="bi bi-basket2"
+              style="font-size: 20px; margin-right: 10px"
+            ></i>
+            Sepete Ekle</a
+          >
+
+          <a
+            class="btn-style btn"
+            *ngIf="kullaniciYetkiId === 1"
+            (click)="sepete_ekle(urun.urunId, urun.alisFiyati)"
+            ><i class="bi bi-basket2"></i> Sepete Ekle</a
+          >
+
+          <a
+            class="btn-style btn"
+            *ngIf="
+              kullaniciYetkiId === 2 &&
+              !kampanyaliUrunIdleri.includes(urun.urunId)
+            "
+            (click)="sepete_ekle(urun.urunId, urun.toptanciFiyati)"
+            ><i class="bi bi-basket2"></i> Sepete Ekle</a
+          >
+
+          <a
+            class="btn-style btn"
+            *ngIf="
+              kullaniciYetkiId === 2 &&
+              kampanyaliUrunIdleri.includes(urun.urunId)
+            "
+            (click)="
+              sepete_ekle(
+                urun.urunId,
+                urun.toptanciFiyati -
+                  urun.toptanciFiyati *
+                    (yuzdeler[kampanyaliUrunIdleri.indexOf(urun.urunId)] / 100)
+              )
+            "
+            ><i class="bi bi-basket2"></i> Sepete Ekle</a
+          >
+
+          <a
+            class="btn-style btn"
+            *ngIf="
+              kullaniciYetkiId === 3 &&
+              !kampanyaliUrunIdleri.includes(urun.urunId)
+            "
+            (click)="sepete_ekle(urun.urunId, urun.bayiFiyati)"
+            ><i class="bi bi-basket2"></i> Sepete Ekle</a
+          >
+
+          <a
+            class="btn-style btn"
+            *ngIf="
+              kullaniciYetkiId === 3 &&
+              kampanyaliUrunIdleri.includes(urun.urunId)
+            "
+            (click)="
+              sepete_ekle(
+                urun.urunId,
+                urun.bayiFiyati -
+                  urun.bayiFiyati *
+                    (yuzdeler[kampanyaliUrunIdleri.indexOf(urun.urunId)] / 100)
+              )
+            "
+            ><i class="bi bi-basket2"></i> Sepete Ekle</a
+          >
+
+          <i
+            *ngIf="kampanyaliUrunIdleri.includes(urun.urunId)"
+            class="card-text"
+          >
+            Sepette %{{ yuzdeler[kampanyaliUrunIdleri.indexOf(urun.urunId)] }}
+            indirim
+          </i>
+
+          <br *ngIf="!kampanyaliUrunIdleri.includes(urun.urunId)" />
+
+          <div class="admin-btn-style-group">
+            <a
+              *ngIf="kullaniciAdminMi"
+              href="urun-guncelle/{{ urun.urunId }}"
+              class="btn-admin-style btn btn-outline-success"
+              >Ürün Düzenle</a
+            >
+
+            <a
+              *ngIf="kullaniciAdminMi"
+              href="/urun-ekle/r/{{ urun.urunId }}"
+              class="btn-admin-style btn btn-outline-success"
+              >Resimler</a
+            >
+            <a
+              *ngIf="kullaniciAdminMi"
+              (click)="kampanya_ekle(urun.urunId)"
+              class="btn-admin-style2 btn btn-outline-info"
+              >Kampanya Güncelle</a
+            >
+            <input
+              *ngIf="kullaniciAdminMi"
+              class="input-admin"
+              type="number"
+              placeholder="%"
+              (change)="yuzde_guncelle($event)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<br />

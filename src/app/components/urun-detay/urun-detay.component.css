@@ -1,0 +1,14 @@
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+  filter: invert(100%);
+}
+
+.btn-style {
+  width: 50%;
+  background-color: #ff6000;
+  color: white;
+  font-weight: 700;
+}
+.btn-style:hover {
+  background-color: #eb5800;
+}

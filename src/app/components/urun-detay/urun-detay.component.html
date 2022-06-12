@@ -1,0 +1,236 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Ürün Detayları</h4>
+</div>
+<br />
+<div class="container" *ngIf="!!urunDetay">
+  <div class="row">
+    <div class="col-lg">
+      <div
+        id="carouselExampleIndicators"
+        class="
+          carousel
+          d-flex
+          flex-row
+          justify-content-center
+          align-items-center
+          carousel-fade
+        "
+        data-bs-ride="carousel"
+        style="height: 600px"
+      >
+        <div class="carousel-indicators">
+          <button
+            *ngFor="let resim of urunResimleri; let i = index"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            attr.data-bs-slide-to="{{ i }}"
+            [class]="getButtonClass(resim)"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+        </div>
+
+        <div class="carousel-inner">
+          <div
+            *ngFor="let resim of urunResimleri"
+            [class]="getCurrentImageClass(resim)"
+          >
+            <img
+              [src]="resimUrl + resim.resimAdresi"
+              class="d-block w-100"
+              alt="Image"
+            />
+          </div>
+        </div>
+
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="col-lg d-flex flex-row justify-content-center align-items-center"
+    >
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Ürün :</th>
+            <td>{{ urunDetay.urunAdi }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Stok Kodu :</th>
+            <td>{{ urunDetay.stokKodu }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Fiyat :</th>
+            <td *ngIf="kullaniciYetkiId === 0">
+              {{ urunDetay.perakendeFiyati }} ₺
+            </td>
+            <td *ngIf="kullaniciYetkiId === 2 || kullaniciYetkiId === 1">
+              {{ urunDetay.toptanciFiyati }} ₺
+            </td>
+            <td *ngIf="kullaniciYetkiId === 3">{{ urunDetay.bayiFiyati }} ₺</td>
+          </tr>
+          <tr>
+            <th scope="row">Kategori :</th>
+            <td>{{ urunDetay.kategoriAdi }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Marka :</th>
+            <td>{{ urunDetay.markaAdi }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Açıklama :</th>
+            <td>
+              {{ urunDetay.aciklama }}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Uyumlu Markalar :</th>
+            <td>{{ uyumMarkaAdlar.join(", ") }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Uyumlu Modeller :</th>
+            <td>{{ uyumModelAdlar.join(", ") }}</td>
+          </tr>
+
+          <tr *ngIf="kullaniciYetkiId === 1">
+            <th scope="row">Kullanıcı Seç :</th>
+            <td>
+              <select
+                *ngIf="kullanicilar"
+                class="form-select"
+                (change)="updateSeciliKullanici($event)"
+              >
+                <option selected value="0">Kullanıcı</option>
+                <option
+                  *ngFor="let kullanici of kullanicilar"
+                  [value]="kullanici.userId"
+                >
+                  {{ kullanici.email }}
+                </option>
+              </select>
+            </td>
+          </tr>
+
+          <tr *ngIf="kullaniciYetkiId === 1">
+            <th scope="row">Satıcı Seç :</th>
+            <td>
+              <select
+                *ngIf="toptancilar"
+                class="form-select"
+                (change)="updateSeciliToptanci($event)"
+              >
+                <option selectedvalue="0">Satıcı</option>
+                <option
+                  *ngFor="let toptanci of toptancilar"
+                  [value]="toptanci.toptanciId"
+                >
+                  {{ toptanci.firma }}{{ toptanci.firstName }}
+                  {{ toptanci.firstName }}
+                </option>
+              </select>
+            </td>
+          </tr>
+
+          <tr *ngIf="kullaniciYetkiId === 1">
+            <th scope="row">Kullanıcı Fiyatı :</th>
+            <td>
+              <input
+                type="number"
+                class="form-control"
+                placeholder=""
+                aria-label="Example text with button addon"
+                aria-describedby="button-addon1"
+                [(ngModel)]="seciliKullaniciFiyati"
+                disabled
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <th scope="row" style="vertical-align: center">Adet :</th>
+            <td>
+              <input
+                type="number"
+                class="form-control"
+                placeholder=""
+                [(ngModel)]="adet"
+                style="height: 30px; width: 100px"
+                min="1"
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2" style="text-align: center">
+              <button
+                *ngIf="kampanyaliUrunIdleri.includes(urunDetay.urunId)"
+                class="btn-style btn"
+                type="button"
+                id="button-add"
+                (click)="
+                  sepete_ekle(
+                    yuzdeler[kampanyaliUrunIdleri.indexOf(urunDetay.urunId)]
+                  )
+                "
+              >
+                <i
+                  class="bi bi-basket2"
+                  style="font-size: 15px; margin-right: 1px"
+                ></i>
+                Sepete Ekle
+              </button>
+
+              <button
+                *ngIf="!kampanyaliUrunIdleri.includes(urunDetay.urunId)"
+                class="btn-style btn"
+                type="button"
+                id="button-add"
+                (click)="sepete_ekle(0)"
+              >
+                <i
+                  class="bi bi-basket2"
+                  style="font-size: 15px; margin-right: 1px"
+                ></i>
+                Sepete Ekle
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colspan="2"
+              style="text-align: center"
+              *ngIf="kampanyaliUrunIdleri.includes(urunDetay.urunId)"
+            >
+              <i class="card-text">
+                Sepette %{{
+                  yuzdeler[kampanyaliUrunIdleri.indexOf(urunDetay.urunId)]
+                }}
+                indirim
+              </i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

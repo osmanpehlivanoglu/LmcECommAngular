@@ -1,0 +1,104 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Onaylı Sipariş Geri Alma</h4>
+</div>
+<br />
+<table class="table table-hover">
+  <thead class="thead">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tarih</th>
+      <th scope="col">Müşteri</th>
+      <th scope="col">Kod</th>
+      <th scope="col">Onay Güncelle</th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="sepetler">
+    <tr
+      *ngFor="let sepet of sepetler; let i = index"
+      (click)="hangiIndextekiSepet(i)"
+    >
+      <th scope="row" class="align-middle">
+        {{ i + 1 }}
+      </th>
+      <td class="align-middle">
+        {{ sepet.tarih | date: "medium" }}
+      </td>
+      <td class="align-middle">
+        {{ sepet.musteriId }}
+      </td>
+      <td class="align-middle">
+        {{ sepet.stokKodu }}
+      </td>
+
+      <td class="align-middle">
+        <div class="input-group mb-3 input-group-sm">
+          <input type="number" class="form-control visually-hidden" />
+          <div
+            class="btn-group btn-group-sm"
+            role="group"
+            aria-label="Basic outlined example"
+          >
+            <button
+              (click)="guncelle(sepet.sepetId, 1)"
+              class="btn btn-outline-info btn-kucuk"
+            >
+              <i class="bi bi-arrow-repeat"></i>
+              Onay?
+            </button>
+
+            <button
+              (click)="guncelle(sepet.sepetId, 3)"
+              class="btn btn-outline-warning btn-kucuk"
+            >
+              <i class="bi bi-arrow-repeat"></i>
+              İptal
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+<table class="table" *ngIf="seciliSepetIndex >= 0">
+  <thead class="thead">
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Müşteri</th>
+      <th scope="col">Firma</th>
+      <th scope="col">Telefon</th>
+      <th scope="col">Adres</th>
+      <th scope="col">Email</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <th scope="row" class="align-middle">
+        {{ sepetler[seciliSepetIndex].musteriId }}
+      </th>
+      <td class="align-middle">
+        {{ sepetler[seciliSepetIndex].musteriAdi }}
+        {{ sepetler[seciliSepetIndex].musteriSoyadi }}
+      </td>
+      <td class="align-middle">
+        {{ sepetler[seciliSepetIndex].musteriTelefon }}
+      </td>
+      <td class="align-middle">
+        {{ sepetler[seciliSepetIndex].musteriAdres }}
+      </td>
+      <td class="align-middle">
+        {{ sepetler[seciliSepetIndex].musteriTelefon }}
+      </td>
+      <td class="align-middle">
+        {{ sepetler[seciliSepetIndex].musteriEmail }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br />

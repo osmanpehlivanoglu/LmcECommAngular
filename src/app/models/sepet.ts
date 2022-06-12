@@ -1,0 +1,30 @@
+export interface Sepet {
+  sepetId: number;
+  musteriId: number;
+  musteriAdi: string;
+  musteriSoyadi: string;
+  musteriFirma: string;
+  musteriEmail: string;
+  musteriTelefon: string;
+  musteriAdres: string;
+  urunId: number;
+  urunAdi: string;
+  stokKodu: string;
+  alisFiyati: number;
+  adet: number;
+  fiyat: number;
+  durum: boolean;
+  tarih: Date;
+  onayId: number;
+  onayAdi: string;
+  saticiId: number;
+  saticiAdi: string;
+  saticiSoyadi: string;
+  saticiFirma: string;
+  saticiEmail: string;
+  saticiTelefon: string;
+  saticiAdres: string;
+  satinAlimId: number;
+  satisId: number;
+  tarihStr: string;
+}

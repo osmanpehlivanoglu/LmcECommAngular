@@ -1,0 +1,68 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Kategori Ekle</h4>
+</div>
+<br />
+<div class="container" style="width: 600px">
+  <div class="row">
+    <form [formGroup]="kategoriForm">
+      <span
+        *ngIf="
+          !kategoriForm.get('kategoriAdi').valid &&
+          kategoriForm.get('kategoriAdi').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir kategori ismi giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Kategori Adı</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="kategoriAdi"
+        />
+      </div>
+    </form>
+
+    <form [formGroup]="markaForm">
+      <input
+        type="number"
+        class="form-control visually-hidden"
+        aria-describedby="basic-addon1"
+        formControlName="kategoriId"
+      />
+
+      <input
+        type="text"
+        class="form-control visually-hidden"
+        aria-describedby="basic-addon1"
+        formControlName="markaAdi"
+      />
+    </form>
+  </div>
+
+  <div class="row" style="margin-left: 0.5px; margin-right: 0.5px">
+    <button class="btn btn-primary" (click)="ekle()">Ekle</button>
+  </div>
+
+  <div *ngIf="eklendiMi" class="alert alert-success" role="alert">
+    {{ mesaj }} Kategoriye ait markaları eklemek için
+    <a href="kategori-ekle/m/{{ eklenenKategoriId }}" class="alert-link"
+      >tıklayın.</a
+    >
+    Kategori eklemeye devam etmek için
+    <a href="kategori-ekle" class="alert-link">tıklayın.</a>
+  </div>
+
+  <div *ngIf="eklenmediMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="formHataliMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+</div>

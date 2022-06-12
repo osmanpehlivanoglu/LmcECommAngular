@@ -1,0 +1,336 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Ürün Güncelle</h4>
+</div>
+<br />
+<div class="row">
+  <div class="col-lg">
+    <form [formGroup]="urunForm">
+      <input
+        type="text"
+        class="form-control visually-hidden"
+        aria-describedby="basic-addon1"
+        formControlName="urunId"
+      />
+
+      <span
+        *ngIf="
+          !urunForm.get('urunAdi').valid && urunForm.get('urunAdi').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir ürün ismi giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Ürün Adı</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="urunAdi"
+        />
+      </div>
+      <span
+        *ngIf="
+          !urunForm.get('stokKodu').valid && urunForm.get('stokKodu').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir stok kodu giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Stok Kodu</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="stokKodu"
+        />
+      </div>
+      <span
+        *ngIf="
+          !urunForm.get('stokMiktari').valid &&
+          urunForm.get('stokMiktari').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir stok miktarı giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Stok Miktarı</span
+        >
+        <input
+          type="number"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="stokMiktari"
+        />
+      </div>
+      <span
+        *ngIf="
+          !urunForm.get('alisFiyati').valid &&
+          urunForm.get('alisFiyati').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir alış fiyatı giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Alış Fiyatı</span
+        >
+        <input
+          type="number"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="alisFiyati"
+        />
+      </div>
+      <span
+        *ngIf="
+          !urunForm.get('toptanciFiyati').valid &&
+          urunForm.get('toptanciFiyati').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir toptancı fiyatı giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Toptancı Fiyatı</span
+        >
+        <input
+          type="number"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="toptanciFiyati"
+        />
+      </div>
+      <span
+        style="font-size: small"
+        *ngIf="
+          !urunForm.get('bayiFiyati').valid &&
+          urunForm.get('bayiFiyati').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir bayi fiyatı giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Bayi Fiyatı</span
+        >
+        <input
+          type="number"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="bayiFiyati"
+        />
+      </div>
+      <span
+        *ngIf="
+          !urunForm.get('perakendeFiyati').valid &&
+          urunForm.get('perakendeFiyati').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir perakende fiyatı giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Perakende Fiyatı</span
+        >
+        <input
+          type="number"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="perakendeFiyati"
+        />
+      </div>
+    </form>
+
+    <div class="input-group mb-3 input-group-sm">
+      <span class="input-group-text" id="basic-addon1" style="width: 160px"
+        >Kategori</span
+      >
+
+      <select
+        *ngIf="urun"
+        class="form-select"
+        (change)="updateSeciliKategori($event)"
+        (click)="getMarkalarByKategoriId(seciliKategoriId)"
+      >
+        <option selected disabled>
+          {{ urun.kategoriAdi }}
+        </option>
+        <option
+          *ngFor="let kategori of kategoriler"
+          [value]="kategori.kategoriId"
+        >
+          {{ kategori.kategoriAdi }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-lg">
+    <div class="input-group mb-3 input-group-sm">
+      <span class="input-group-text" id="basic-addon1" style="width: 160px"
+        >Marka</span
+      >
+      <select
+        class="form-select"
+        (change)="updateSeciliMarka($event)"
+        *ngIf="urun"
+      >
+        <option selected disabled>{{ urun.markaAdi }}</option>
+        <option *ngFor="let marka of markalar" [value]="marka.markaId">
+          {{ marka.markaAdi }}
+        </option>
+      </select>
+    </div>
+
+    <form [formGroup]="urunForm">
+      <input
+        type="number"
+        class="form-control"
+        aria-describedby="basic-addon1"
+        formControlName="kategoriId"
+      />
+
+      <input
+        type="number"
+        class="form-control"
+        aria-describedby="basic-addon1"
+        formControlName="markaId"
+      />
+
+      <input
+        type="text"
+        class="form-control"
+        aria-describedby="basic-addon1"
+        formControlName="uyumMarkaId"
+      />
+
+      <input
+        type="text"
+        class="form-control"
+        aria-describedby="basic-addon1"
+        formControlName="uyumModelId"
+      />
+      <span
+        *ngIf="
+          !urunForm.get('aciklama').valid && urunForm.get('aciklama').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir açıklama giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Açıklama</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="aciklama"
+        />
+      </div>
+
+      <!-- <button class="btn btn-fill btn primary" (click)="onSubmit()">Ekle</button> -->
+    </form>
+    <form [formGroup]="urunForm2">
+      <span
+        *ngIf="
+          !urunForm.get('uyumMarkaId').valid &&
+          urunForm2.get('uyumMarkaId').touched
+        "
+        class="help-block"
+        >Lütfen uyumlu marka seçiniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm" style="height: 125px">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Uyumlu Markalar</span
+        >
+
+        <select
+          class="form-select"
+          formControlName="uyumMarkaId"
+          multiple
+          (change)="updateSeciliUyumMarka()"
+          (click)="getUyumluModeller()"
+          *ngIf="uyumluMarkalar"
+        >
+          <option selected disabled *ngFor="let uM of uyumluMarkalar">
+            {{ uM }}
+          </option>
+
+          <option
+            *ngFor="let uyumMarka of uyumMarkalar"
+            [value]="uyumMarka.uyumMarkaId"
+          >
+            {{ uyumMarka.uyumMarkaAdi }}
+          </option>
+        </select>
+      </div>
+
+      <span
+        *ngIf="
+          !urunForm.get('uyumModelId').valid &&
+          urunForm2.get('uyumModelId').touched
+        "
+        class="help-block"
+        >Lütfen uyumlu model seçiniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm" style="height: 125px">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Uyumlu Modeller</span
+        >
+        <select
+          class="form-select"
+          formControlName="uyumModelId"
+          multiple
+          (change)="updateSeciliUyumModel()"
+        >
+          <option selected disabled *ngFor="let uM of uyumluModeller">
+            {{ uM }}
+          </option>
+          <option
+            *ngFor="let uyumModel of uyumModeller"
+            [value]="uyumModel.uyumModelId"
+          >
+            {{ uyumModel.uyumModelAdi }}
+          </option>
+        </select>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- 
+<span
+  *ngIf="!urunForm.valid && urunForm.touched"
+  class="help-block"
+  >Ürün ismi geçersiz.</span
+> -->
+
+<div
+  class="row"
+  style="margin-left: 0.5px; margin-right: 0.5px; margin-bottom: 3px"
+>
+  <button class="btn btn-success" (click)="guncelle()">Güncelle</button>
+
+  <button class="btn btn-dark" (click)="sil()">Sil</button>
+</div>
+
+<div *ngIf="eklendiMi" class="alert alert-success" role="alert">
+  {{ mesaj }}
+</div>
+
+<div *ngIf="eklenmediMi" class="alert alert-danger" role="alert">
+  {{ mesaj }}
+</div>
+
+<div *ngIf="formHataliMi" class="alert alert-danger" role="alert">
+  {{ mesaj }}
+</div>
+
+<br />

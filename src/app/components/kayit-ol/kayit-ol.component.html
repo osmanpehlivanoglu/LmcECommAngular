@@ -1,0 +1,188 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Kayıt Ol</h4>
+</div>
+<br />
+<div class="container" style="width: 600px">
+  <div class="row">
+    <form [formGroup]="kayitForm">
+      <span
+        *ngIf="
+          !kayitForm.get('firstName').valid &&
+          kayitForm.get('firstName').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir isim giriniz.</span
+      >
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >İsim</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="firstName"
+        />
+      </div>
+      <span
+        *ngIf="
+          !kayitForm.get('lastName').valid && kayitForm.get('lastName').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir soyisim giriniz.</span
+      >
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Soyisim</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="lastName"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Firma</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="firma"
+        />
+      </div>
+      <span
+        *ngIf="!kayitForm.get('email').valid && kayitForm.get('email').touched"
+        class="help-block"
+        >Lütfen geçerli bir email giriniz.</span
+      >
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Email</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="email"
+        />
+      </div>
+
+      <span
+        *ngIf="
+          !kayitForm.get('telefon').valid && kayitForm.get('telefon').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir telefon giriniz.</span
+      >
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Telefon</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="telefon"
+        />
+      </div>
+
+      <span
+        *ngIf="!kayitForm.get('city').valid && kayitForm.get('city').touched"
+        class="help-block"
+        >Lütfen geçerli bir şehir giriniz.</span
+      >
+
+      <div class="input-group mb-3" style="margin-bottom: 20px">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Şehir</span
+        >
+        <input
+          class="form-control"
+          type="text"
+          list="datalistOptions1"
+          placeholder="Ara..."
+          (change)="getDistrictsByCity($event)"
+          formControlName="city"
+        />
+        <datalist id="datalistOptions1">
+          <option *ngFor="let city of cities">
+            {{ city.cityName }}
+          </option>
+        </datalist>
+      </div>
+
+      <span
+        *ngIf="
+          !kayitForm.get('district').valid && kayitForm.get('district').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir ilçe giriniz.</span
+      >
+      <div class="input-group mb-3" style="margin-bottom: 20px">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >İlçe</span
+        >
+        <input
+          class="form-control"
+          type="text"
+          list="datalistOptions2"
+          formControlName="district"
+        />
+        <datalist id="datalistOptions2">
+          <option *ngFor="let district of districts">
+            {{ district.districtName }}
+          </option>
+        </datalist>
+      </div>
+
+      <span
+        *ngIf="!kayitForm.get('adres').valid && kayitForm.get('adres').touched"
+        class="help-block"
+        >Lütfen geçerli bir adres giriniz.</span
+      >
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Adres</span
+        >
+        <textarea
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="adres"
+        ></textarea>
+      </div>
+
+      <span
+        *ngIf="
+          !kayitForm.get('password').valid && kayitForm.get('password').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir parola giriniz.</span
+      >
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Parola</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="password"
+        />
+      </div>
+    </form>
+  </div>
+
+  <div class="row" style="margin-left: 0.5px; margin-right: 0.5px">
+    <button class="btn btn-primary" (click)="register()">Kayıt Ol</button>
+    <a class="btn btn-dark" href="giris-yap" style="margin-top: 3px"
+      >Giriş Yap</a
+    >
+  </div>
+</div>

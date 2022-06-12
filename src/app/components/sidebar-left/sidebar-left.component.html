@@ -1,0 +1,52 @@
+<br />
+<div id="otomatikKapat">
+  <div class="list-group list-group-flush">
+    <div
+      *ngFor="let kategori of kategoriler"
+      class="list-group list-group-flush"
+    >
+      <button
+        class="list-group-item list-group-item-action list-group-item-light"
+        data-bs-toggle="collapse"
+        [attr.data-bs-target]="'#collapse' + kategori.kategoriId"
+        aria-expanded="false"
+        aria-controls="collapseExample"
+        style="font-weight: 500"
+        (click)="getMarkalarByKategoriId(kategori.kategoriId)"
+        routerLink="/urunler/k/{{ kategori.kategoriId }}/m/tm"
+      >
+        <i class="bi bi-chevron-compact-right"></i>
+
+        {{ kategori.kategoriAdi | titlecase }}
+      </button>
+
+      <div
+        class="collapse"
+        [id]="'collapse' + kategori.kategoriId"
+        data-bs-parent="#otomatikKapat"
+      >
+        <div class="list-group list-group-flush" style="margin-left: 20px">
+          <button
+            type="button"
+            class="list-group-item list-group-item-action list-group-item-light"
+            aria-current="true"
+            routerLink="/urunler/k/{{ kategori.kategoriId }}/m/tm"
+          >
+            Tüm Markalar
+          </button>
+          <button
+            type="button"
+            class="list-group-item list-group-item-action list-group-item-light"
+            aria-current="true"
+            *ngFor="let marka of markalar"
+            routerLink="/urunler/k/{{ kategori.kategoriId }}/m/{{
+              marka.markaId
+            }}"
+          >
+            {{ marka.markaAdi }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

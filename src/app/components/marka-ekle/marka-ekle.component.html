@@ -1,0 +1,86 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Marka Ekle</h4>
+</div>
+<br />
+<div class="container" style="width: 600px">
+  <div class="row">
+    <form [formGroup]="toptanciAdiIcinForm">
+      <span
+        *ngIf="
+          !toptanciAdiIcinForm.get('toptanciAdi').valid &&
+          toptanciAdiIcinForm.get('toptanciAdi').touched
+        "
+        class="help-block"
+        >Lütfen toptancı seçiniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Toptancı</span
+        >
+        <select
+          *ngIf="toptancilar"
+          class="form-select"
+          (change)="updateSeciliToptanci($event)"
+          formControlName="toptanciAdi"
+        >
+          <option
+            *ngFor="let toptanci of toptancilar"
+            [value]="toptanci.toptanciId"
+          >
+            {{ toptanci.firma }}{{ toptanci.firstName }}
+            {{ toptanci.firstName }}
+          </option>
+        </select>
+      </div>
+    </form>
+    <form [formGroup]="markaForm">
+      <input
+        type="number"
+        class="form-control visually-hidden"
+        aria-describedby="basic-addon1"
+        formControlName="kategoriId"
+      />
+
+      <input
+        type="number"
+        class="form-control visually-hidden"
+        aria-describedby="basic-addon1"
+        formControlName="toptanciId"
+      />
+
+      <span
+        *ngIf="
+          !markaForm.get('markaAdi').valid && markaForm.get('markaAdi').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir marka ismi giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Marka Adı</span
+        >
+
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="markaAdi"
+        />
+      </div>
+    </form>
+  </div>
+
+  <div class="row" style="margin-left: 0.5px; margin-right: 0.5px">
+    <button class="btn btn-primary" (click)="ekle()">Ekle</button>
+  </div>
+
+  <div *ngIf="eklendiMi" class="alert alert-success" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="formHataliMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+</div>

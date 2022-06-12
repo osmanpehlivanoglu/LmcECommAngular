@@ -1,0 +1,96 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Sepetim</h4>
+</div>
+<br />
+
+<div *ngIf="urunlerDetay.length === 0" style="text-align: center">
+  <i>Sepetinizde hiç ürün yok...</i>
+</div>
+
+<table class="table" *ngIf="urunlerDetay.length > 0">
+  <thead class="thead">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Ürün</th>
+      <th scope="col">Fiyat</th>
+      <th scope="col">Adet</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let urun of urunlerDetay; let i = index">
+      <th scope="row" class="align-middle">{{ i + 1 }}</th>
+      <td class="align-middle">
+        {{ urun.urunAdi }}
+      </td>
+      <td class="align-middle">{{ sepet[i].fiyat }}</td>
+      <td>
+        <div class="input-group mb-3 input-group-sm">
+          <input
+            type="number"
+            class="form-control"
+            aria-label="Example text with button addon"
+            aria-describedby="button-addon1"
+            [(ngModel)]="sepet[i].adet"
+            (change)="guncel_adet($event)"
+          />
+
+          <div
+            class="btn-group btn-group-sm"
+            role="group"
+            aria-label="Basic outlined example"
+          >
+            <button
+              (click)="guncelle(sepet[i].sepetId)"
+              class="btn btn-outline-success btn-kucuk"
+            >
+              <i class="bi bi-arrow-repeat"></i> Güncelle
+            </button>
+            <button
+              (click)="sil(sepet[i].sepetId)"
+              class="btn btn-outline-danger btn-kucuk"
+            >
+              <i class="bi bi-bag-x"></i> Sil
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <div class="d-flex justify-content-end" style="font-weight: 500">
+          Toplam: $ {{ sepetFiyati.toFixed(2) }}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div
+  class="d-grid gap-2 col-6 mx-auto"
+  style="margin-top: 30px; margin-bottom: 30px"
+  *ngIf="urunlerDetay.length > 0"
+>
+  <button class="btn btn-primary" (click)="onayla()">Sepeti Onayla</button>
+
+  <button class="btn btn-dark" (click)="temizle()">Sepeti Temizle</button>
+</div>
+
+<div *ngIf="eklendiMi" class="alert alert-success" role="alert">
+  {{ mesaj }}
+</div>
+
+<div *ngIf="eklenmediMi" class="alert alert-danger" role="alert">
+  {{ mesaj }}
+</div>
+
+<div *ngIf="formHataliMi" class="alert alert-danger" role="alert">
+  {{ mesaj }}
+</div>
+
+<br />

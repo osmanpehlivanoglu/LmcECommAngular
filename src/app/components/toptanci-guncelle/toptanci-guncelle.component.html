@@ -1,0 +1,147 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Toptancı Güncelle</h4>
+</div>
+<br />
+<div class="container" style="width: 600px">
+  <div class="row">
+    <form [formGroup]="toptanciAdiIcinForm">
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Toptancı</span
+        >
+        <select
+          *ngIf="toptancilar"
+          class="form-select"
+          (change)="updateSeciliToptanci($event)"
+          formControlName="toptanciAdiDegisik"
+        >
+          <option
+            *ngFor="let toptanci of toptancilar"
+            [value]="toptanci.toptanciId"
+          >
+            {{ toptanci.firma }}{{ toptanci.firstName }}{{ toptanci.lastName }}
+          </option>
+        </select>
+      </div>
+    </form>
+    <form [formGroup]="toptanciForm">
+      <input
+        type="text"
+        class="form-control visually-hidden"
+        aria-describedby="basic-addon1"
+        formControlName="toptanciId"
+      />
+
+      <span
+        *ngIf="
+          !toptanciForm.get('firstName').valid &&
+          toptanciForm.get('firstName').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir isim giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >İsim</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="firstName"
+        />
+      </div>
+      <span
+        *ngIf="
+          !toptanciForm.get('lastName').valid &&
+          toptanciForm.get('lastName').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir soyisim giriniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Soyisim</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="lastName"
+        />
+      </div>
+
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Firma</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="firma"
+        />
+      </div>
+
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Email</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="email"
+        />
+      </div>
+
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Telefon</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="telefon"
+        />
+      </div>
+
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Adres</span
+        >
+        <textarea
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="adres"
+        ></textarea>
+      </div>
+    </form>
+  </div>
+
+  <div
+    class="row"
+    style="margin-left: 0.5px; margin-right: 0.5px; margin-bottom: 3px"
+  >
+    <button class="btn btn-success" (click)="guncelle()">Güncelle</button>
+  </div>
+  <div class="row" style="margin-left: 0.5px; margin-right: 0.5px">
+    <button class="btn btn-dark" (click)="sil()">Sil</button>
+  </div>
+
+  <div *ngIf="eklendiMi" class="alert alert-success" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="eklenmediMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="formHataliMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+</div>

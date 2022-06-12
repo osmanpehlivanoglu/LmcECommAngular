@@ -1,0 +1,190 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Ödeme Ekle</h4>
+</div>
+<br />
+<div class="container" style="width: 600px">
+  <div class="row">
+    <form [formGroup]="odemeMusteriToptanciAdiIcinForm">
+      <span
+        *ngIf="
+          !odemeMusteriToptanciAdiIcinForm.get('odemeAdi').valid &&
+          odemeMusteriToptanciAdiIcinForm.get('odemeAdi').touched
+        "
+        class="help-block"
+        >Lütfen ödeme türü seçiniz.</span
+      >
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Ödeme Türü</span
+        >
+        <select
+          class="form-select"
+          (change)="updateSeciliOdeme($event)"
+          formControlName="odemeAdi"
+        >
+          <option value="1">Ödeme Yap</option>
+          <option value="2">Ödeme Al</option>
+        </select>
+      </div>
+      <span
+        *ngIf="
+          !odemeMusteriToptanciAdiIcinForm.get('toptanciAdi').valid &&
+          odemeMusteriToptanciAdiIcinForm.get('toptanciAdi').touched
+        "
+        class="help-block"
+        >Lütfen toptancı seçiniz.</span
+      >
+      <div
+        class="input-group mb-3 input-group-sm"
+        *ngIf="toptancilar.length > 0"
+      >
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Toptancı</span
+        >
+        <select
+          class="form-select"
+          (change)="updateSeciliToptanci($event)"
+          formControlName="toptanciAdi"
+        >
+          <option
+            *ngFor="let toptanci of toptancilar"
+            [value]="toptanci.toptanciId"
+          >
+            {{ toptanci.firma }}{{ toptanci.firstName }}
+            {{ toptanci.lastName }}
+          </option>
+        </select>
+      </div>
+
+      <span
+        *ngIf="
+          !odemeMusteriToptanciAdiIcinForm.get('musteriAdi').valid &&
+          odemeMusteriToptanciAdiIcinForm.get('musteriAdi').touched
+        "
+        class="help-block"
+        >Lütfen müşteri seçiniz.</span
+      >
+      <div
+        class="input-group mb-3 input-group-sm"
+        *ngIf="musteriler.length > 0"
+      >
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Müşteri</span
+        >
+        <select
+          class="form-select"
+          (change)="updateSeciliMusteri($event)"
+          formControlName="musteriAdi"
+        >
+          <option *ngFor="let musteri of musteriler" [value]="musteri.userId">
+            {{ musteri.firma }}{{ musteri.firstName }}
+            {{ musteri.lastName }}
+          </option>
+        </select>
+      </div>
+
+      <input
+        type="number"
+        class="form-control visually-hidden"
+        aria-describedby="basic-addon1"
+        formControlName="odemeId"
+      />
+    </form>
+
+    <form [formGroup]="odemeYapForm" *ngIf="seciliOdemeTuru === 1">
+      <input
+        type="number"
+        class="form-control visually-hidden"
+        aria-describedby="basic-addon1"
+        formControlName="toptanciId"
+      />
+
+      <span
+        *ngIf="
+          !odemeYapForm.get('miktar').valid &&
+          odemeYapForm.get('miktar').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir miktar giriniz.</span
+      >
+      <div
+        class="input-group mb-3 input-group-sm"
+        *ngIf="seciliOdemeTuru === 1"
+      >
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Miktar</span
+        >
+
+        <input
+          type="number"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="miktar"
+        />
+      </div>
+      <!-- 
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Tarih</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          bsDatepicker
+          [bsConfig]="{ isAnimated: true }"
+        />
+      </div>
+       -->
+    </form>
+
+    <form [formGroup]="odemeAlForm" *ngIf="seciliOdemeTuru === 2">
+      <input
+        type="number"
+        class="form-control visually-hidden"
+        aria-describedby="basic-addon1"
+        formControlName="musteriId"
+      />
+
+      <span
+        *ngIf="
+          !odemeAlForm.get('miktar').valid && odemeAlForm.get('miktar').touched
+        "
+        class="help-block"
+        >Lütfen geçerli bir miktar giriniz.</span
+      >
+      <div
+        class="input-group mb-3 input-group-sm"
+        *ngIf="seciliOdemeTuru === 2"
+      >
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Miktar</span
+        >
+
+        <input
+          type="number"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="miktar"
+        />
+      </div>
+    </form>
+  </div>
+
+  <div
+    class="row"
+    style="margin-left: 0.5px; margin-right: 0.5px"
+    *ngIf="seciliOdemeTuru === 1 || seciliOdemeTuru === 2"
+  >
+    <button class="btn btn-primary" (click)="ekle()">Ekle</button>
+  </div>
+
+  <div *ngIf="eklendiMi" class="alert alert-success" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="formHataliMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+</div>

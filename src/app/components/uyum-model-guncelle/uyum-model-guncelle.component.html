@@ -1,0 +1,154 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Uyum Model Güncelle</h4>
+</div>
+<br />
+<div class="container" style="width: 600px">
+  <div class="row">
+    <div class="col-lg">
+      <form [formGroup]="uyumModelAdiveYeniUyumMarkaIcinForm">
+        <span
+          *ngIf="
+            !uyumModelAdiveYeniUyumMarkaIcinForm.get('uyumMarkaAdiDegisik')
+              .valid &&
+            uyumModelAdiveYeniUyumMarkaIcinForm.get('uyumMarkaAdiDegisik')
+              .touched
+          "
+          class="help-block"
+          >Lütfen uyumlu marka seçiniz.</span
+        >
+        <div class="input-group mb-3 input-group-sm">
+          <span class="input-group-text" id="basic-addon1" style="width: 160px"
+            >Uyumlu Marka</span
+          >
+          <select
+            *ngIf="uyumMarkalar"
+            class="form-select"
+            (change)="updateSeciliUyumMarka($event)"
+            (click)="getUyumModellerByUyumMarkaId(seciliUyumMarkaId)"
+            formControlName="uyumMarkaAdiDegisik"
+          >
+            <option
+              *ngFor="let uyumMarka of uyumMarkalar"
+              [value]="uyumMarka.uyumMarkaId"
+            >
+              {{ uyumMarka.uyumMarkaAdi }}
+            </option>
+          </select>
+        </div>
+        <span
+          *ngIf="
+            !uyumModelAdiveYeniUyumMarkaIcinForm.get('uyumModelAdiDegisik')
+              .valid &&
+            uyumModelAdiveYeniUyumMarkaIcinForm.get('uyumModelAdiDegisik')
+              .touched
+          "
+          class="help-block"
+          >Lütfen güncellenecek uyumlu modeli seçiniz.</span
+        >
+        <div class="input-group mb-3 input-group-sm">
+          <span class="input-group-text" id="basic-addon1" style="width: 160px"
+            >Uyumlu Model</span
+          >
+          <select
+            *ngIf="uyumModeller"
+            class="form-select"
+            (change)="updateSeciliUyumModel($event)"
+            formControlName="uyumModelAdiDegisik"
+          >
+            <option
+              *ngFor="let uyumModel of uyumModeller"
+              [value]="uyumModel.uyumModelId"
+            >
+              {{ uyumModel.uyumModelAdi }}
+            </option>
+          </select>
+        </div>
+        <span
+          *ngIf="
+            !uyumModelAdiveYeniUyumMarkaIcinForm.get('yeniUyumMarkaDegisik')
+              .valid &&
+            uyumModelAdiveYeniUyumMarkaIcinForm.get('yeniUyumMarkaDegisik')
+              .touched
+          "
+          class="help-block"
+          >Lütfen yeni uyumlu model seçiniz.</span
+        >
+        <div class="input-group mb-3 input-group-sm">
+          <span class="input-group-text" id="basic-addon1" style="width: 160px"
+            >Uyumlu Model Yeni</span
+          >
+          <select
+            *ngIf="uyumModeller"
+            class="form-select"
+            formControlName="yeniUyumMarkaDegisik"
+            (change)="updateSeciliUyumMarkaYeni($event)"
+          >
+            <option
+              *ngFor="let uyumMarka of uyumMarkalar"
+              [value]="uyumMarka.uyumMarkaId"
+            >
+              {{ uyumMarka.uyumMarkaAdi }}
+            </option>
+          </select>
+        </div>
+      </form>
+      <form [formGroup]="uyumModelForm">
+        <span
+          *ngIf="
+            !uyumModelForm.get('uyumModelAdi').valid &&
+            uyumModelForm.get('uyumModelAdi').touched
+          "
+          class="help-block"
+          >Lütfen geçerli bir uyumlu model adı giriniz.</span
+        >
+        <div class="input-group mb-3 input-group-sm">
+          <span class="input-group-text" id="basic-addon1" style="width: 160px"
+            >Uyumlu Model Adı Yeni</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            aria-describedby="basic-addon1"
+            formControlName="uyumModelAdi"
+          />
+        </div>
+
+        <input
+          type="number"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="uyumMarkaId"
+        />
+        <input
+          type="number"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="uyumModelId"
+        />
+      </form>
+    </div>
+  </div>
+
+  <div
+    class="row"
+    style="margin-left: 0.5px; margin-right: 0.5px; margin-bottom: 3px"
+  >
+    <button class="btn btn-success" (click)="guncelle()">Güncelle</button>
+  </div>
+  <div class="row" style="margin-left: 0.5px; margin-right: 0.5px">
+    <button class="btn btn-dark" (click)="sil()">Sil</button>
+  </div>
+  <div *ngIf="eklendiMi" class="alert alert-success" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="eklenmediMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="formHataliMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<br />
+<br />
+<div style="text-align: center; font-weight: bold; font-size: 25px">
+  Kullanıcı Yetkilendir
+</div>
+<br />
+<div class="container" style="width: 600px">
+  <div class="row">
+    <form [formGroup]="adlarIcinForm">
+      <span
+        *ngIf="
+          !adlarIcinForm.get('kullaniciAdi').valid &&
+          adlarIcinForm.get('kullaniciAdi').touched
+        "
+        class="help-block"
+        >Lütfen kullanıcı seçiniz.</span
+      >
+
+      <div class="input-group mb-3 input-group-sm">
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Kullanıcı</span
+        >
+        <select
+          *ngIf="kullanicilar"
+          class="form-select"
+          (change)="updateSeciliKullanici($event)"
+          formControlName="kullaniciAdi"
+        >
+          <option
+            *ngFor="let kullanici of kullanicilar"
+            [value]="kullanici.userId"
+          >
+            {{ kullanici.firma }} {{ kullanici.firstName }}
+            {{ kullanici.lastName }}
+          </option>
+        </select>
+      </div>
+      <div
+        class="input-group mb-3 input-group-sm"
+        *ngIf="adlarIcinForm.get('mevcutYetki').value"
+      >
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Mevcut Yetki</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon1"
+          formControlName="mevcutYetki"
+          readonly
+        />
+      </div>
+
+      <div
+        class="input-group mb-3 input-group-sm"
+        *ngIf="!adlarIcinForm.get('mevcutYetki').value"
+      >
+        <span class="input-group-text" id="basic-addon1" style="width: 160px"
+          >Yetkilendir</span
+        >
+        <select
+          *ngIf="yetkiler"
+          class="form-select"
+          (change)="updateSeciliYetki($event)"
+          formControlName="yetkiAdi"
+        >
+          <option
+            *ngFor="let yetki of yetkiler"
+            [value]="yetki.operationClaimId"
+          >
+            {{ yetki.name }}
+          </option>
+        </select>
+      </div>
+    </form>
+
+    <form [formGroup]="kullaniciYetkilendirForm">
+      <input
+        type="number"
+        class="form-control visually-hidden"
+        aria-describedby="basic-addon1"
+        formControlName="userId"
+      />
+
+      <input
+        type="number"
+        class="form-control visually-hidden"
+        aria-describedby="basic-addon1"
+        formControlName="operationClaimId"
+      />
+    </form>
+  </div>
+
+  <div
+    class="row"
+    style="margin-left: 0.5px; margin-right: 0.5px"
+    *ngIf="!adlarIcinForm.get('mevcutYetki').value"
+  >
+    <button class="btn btn-primary" (click)="ekle()">Ekle</button>
+  </div>
+
+  <div *ngIf="eklendiMi" class="alert alert-success" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="formHataliMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+</div>

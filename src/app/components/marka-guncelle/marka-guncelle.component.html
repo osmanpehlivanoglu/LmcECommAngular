@@ -1,0 +1,145 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Marka Güncelle</h4>
+</div>
+<br />
+<div class="container" style="width: 600px">
+  <div class="row">
+    <div class="col-lg">
+      <form [formGroup]="markaAdiveYeniKategoriIcinForm">
+        <span
+          *ngIf="
+            !markaAdiveYeniKategoriIcinForm.get('kategoriAdiDegisik').valid &&
+            markaAdiveYeniKategoriIcinForm.get('kategoriAdiDegisik').touched
+          "
+          class="help-block"
+          >Lütfen kategori seçiniz.</span
+        >
+        <div class="input-group mb-3 input-group-sm">
+          <span class="input-group-text" id="basic-addon1" style="width: 160px"
+            >Kategori</span
+          >
+          <select
+            *ngIf="kategoriler"
+            class="form-select"
+            (change)="updateSeciliKategori($event)"
+            (click)="getMarkalarByKategoriId(seciliKategoriId)"
+            formControlName="kategoriAdiDegisik"
+          >
+            <option
+              *ngFor="let kategori of kategoriler"
+              [value]="kategori.kategoriId"
+            >
+              {{ kategori.kategoriAdi }}
+            </option>
+          </select>
+        </div>
+        <span
+          *ngIf="
+            !markaAdiveYeniKategoriIcinForm.get('markaAdiDegisik').valid &&
+            markaAdiveYeniKategoriIcinForm.get('markaAdiDegisik').touched
+          "
+          class="help-block"
+          >Lütfen güncellenecek markayı seçiniz.</span
+        >
+        <div class="input-group mb-3 input-group-sm">
+          <span class="input-group-text" id="basic-addon1" style="width: 160px"
+            >Marka</span
+          >
+          <select
+            *ngIf="markalar"
+            class="form-select"
+            (change)="updateSeciliMarka($event)"
+            formControlName="markaAdiDegisik"
+          >
+            <option *ngFor="let marka of markalar" [value]="marka.markaId">
+              {{ marka.markaAdi }}
+            </option>
+          </select>
+        </div>
+        <span
+          *ngIf="
+            !markaAdiveYeniKategoriIcinForm.get('yeniKategoriDegisik').valid &&
+            markaAdiveYeniKategoriIcinForm.get('yeniKategoriDegisik').touched
+          "
+          class="help-block"
+          >Lütfen yeni kategori seçiniz.</span
+        >
+        <div class="input-group mb-3 input-group-sm">
+          <span class="input-group-text" id="basic-addon1" style="width: 160px"
+            >Kategori Yeni</span
+          >
+          <select
+            *ngIf="markalar"
+            class="form-select"
+            formControlName="yeniKategoriDegisik"
+            (change)="updateSeciliKategoriYeni($event)"
+          >
+            <option
+              *ngFor="let kategori of kategoriler"
+              [value]="kategori.kategoriId"
+            >
+              {{ kategori.kategoriAdi }}
+            </option>
+          </select>
+        </div>
+      </form>
+      <form [formGroup]="markaForm">
+        <span
+          *ngIf="
+            !markaForm.get('markaAdi').valid &&
+            markaForm.get('markaAdi').touched
+          "
+          class="help-block"
+          >Lütfen geçerli bir marka adı giriniz.</span
+        >
+        <div class="input-group mb-3 input-group-sm">
+          <span class="input-group-text" id="basic-addon1" style="width: 160px"
+            >Marka Adı Yeni</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            aria-describedby="basic-addon1"
+            formControlName="markaAdi"
+          />
+        </div>
+
+        <input
+          type="number"
+          class="form-control visually-hidden"
+          aria-describedby="basic-addon1"
+          formControlName="kategoriId"
+        />
+        <input
+          type="number"
+          class="form-control visually-hidden"
+          aria-describedby="basic-addon1"
+          formControlName="markaId"
+        />
+      </form>
+    </div>
+  </div>
+
+  <div
+    class="row"
+    style="margin-left: 0.5px; margin-right: 0.5px; margin-bottom: 3px"
+  >
+    <button class="btn btn-success" (click)="guncelle()">Güncelle</button>
+  </div>
+  <div class="row" style="margin-left: 0.5px; margin-right: 0.5px">
+    <button class="btn btn-dark" (click)="sil()">Sil</button>
+  </div>
+  <div *ngIf="eklendiMi" class="alert alert-success" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="eklenmediMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="formHataliMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+</div>

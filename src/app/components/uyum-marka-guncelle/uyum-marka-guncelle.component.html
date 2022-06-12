@@ -1,0 +1,80 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Uyumlu Marka Güncelle</h4>
+</div>
+<br />
+<div class="container" style="width: 600px">
+  <div class="row">
+    <div class="col-lg">
+      <form [formGroup]="uyumMarkaAdiIcinForm">
+        <div class="input-group mb-3 input-group-sm">
+          <span class="input-group-text" id="basic-addon1" style="width: 160px"
+            >Uyumlu Marka</span
+          >
+          <select
+            *ngIf="uyumMarkalar"
+            class="form-select"
+            (change)="updateSeciliUyumMarka($event)"
+            formControlName="uyumMarkaAdiDegisik"
+          >
+            <option
+              *ngFor="let uyumMarka of uyumMarkalar"
+              [value]="uyumMarka.uyumMarkaId"
+            >
+              {{ uyumMarka.uyumMarkaAdi }}
+            </option>
+          </select>
+        </div>
+      </form>
+      <form [formGroup]="uyumMarkaForm">
+        <span
+          *ngIf="
+            !uyumMarkaForm.get('uyumMarkaAdi').valid &&
+            uyumMarkaForm.get('uyumMarkaAdi').touched
+          "
+          class="help-block"
+          >Lütfen geçerli bir uyumlu marka adı giriniz.</span
+        >
+        <div class="input-group mb-3 input-group-sm">
+          <span class="input-group-text" id="basic-addon1" style="width: 160px"
+            >Uyumlu Marka Adı Yeni</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            aria-describedby="basic-addon1"
+            formControlName="uyumMarkaAdi"
+          />
+        </div>
+
+        <input
+          type="number"
+          class="form-control visually-hidden"
+          aria-describedby="basic-addon1"
+          formControlName="uyumMarkaId"
+        />
+      </form>
+    </div>
+  </div>
+  <div
+    class="row"
+    style="margin-left: 0.5px; margin-right: 0.5px; margin-bottom: 3px"
+  >
+    <button class="btn btn-success" (click)="guncelle()">Güncelle</button>
+  </div>
+  <div class="row" style="margin-left: 0.5px; margin-right: 0.5px">
+    <button class="btn btn-dark" (click)="sil()">Sil</button>
+  </div>
+  <div *ngIf="eklendiMi" class="alert alert-success" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="eklenmediMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+
+  <div *ngIf="formHataliMi" class="alert alert-danger" role="alert">
+    {{ mesaj }}
+  </div>
+</div>

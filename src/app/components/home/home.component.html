@@ -1,0 +1,75 @@
+<br />
+<div class="row">
+  <div class="col-md-9 col-sm-12">
+    <div class="row">
+      <div
+        id="carouselExampleIndicators"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          <button
+            *ngFor="let resim of resimlerOn; let i = index"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            [attr.data-bs-slide-to]="i"
+            [ngClass]="{ active: i == 0 }"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div
+            class="carousel-item"
+            style="width: 100%; height: 50vh"
+            *ngFor="let resim of resimlerOn; let i = index"
+            [ngClass]="{ active: i == 0 }"
+          >
+            <img
+              style="width: 100%; height: 100%; object-fit: cover"
+              [src]="resimUrl + resim.resimAdresi"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-12 alt-resim" style="max-height: 50vh">
+    <div
+      class="col-md-12 col-4 alt-div"
+      style="height: 33.3%"
+      *ngFor="let resim of resimlerSag; let i = index"
+    >
+      <a href="#" style="height: 100%">
+        <img
+          style="height: 100%; object-fit: contain"
+          [src]="resimUrl + resim.resimAdresi"
+          class="d-block w-100"
+          alt="..."
+        />
+      </a>
+    </div>
+  </div>
+</div>
+<br />

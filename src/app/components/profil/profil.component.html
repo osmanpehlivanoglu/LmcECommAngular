@@ -1,0 +1,66 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Güncel Siparişler</h4>
+</div>
+<br />
+
+<div *ngIf="urunlerDetayOnayBekleyen.length === 0" style="text-align: center">
+  <i>Sipariş bulunamadı...</i>
+</div>
+
+<div class="d-flex justify-content-between">
+  <button
+    type="button"
+    class="btn btn-outline-dark btn-sm"
+    style="width: 200px"
+    routerLink="siparis-gecmisi"
+  >
+    Sipariş Geçmişi
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-outline-success btn-sm"
+    style="width: 200px"
+    routerLink="profil-duzenle"
+  >
+    Profil Düzenle
+  </button>
+</div>
+<br />
+<table class="table" *ngIf="urunlerDetayOnayBekleyen.length > 0">
+  <thead class="thead">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Ürün</th>
+      <th scope="col">Fiyat</th>
+      <th scope="col">Adet</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let urun of urunlerDetayOnayBekleyen; let i = index">
+      <th scope="row" class="align-middle">{{ i + 1 }}</th>
+      <td class="align-middle">
+        {{ urun.urunAdi }}
+      </td>
+      <td class="align-middle">{{ sepetOnayBekleyen[i].fiyat }}</td>
+      <td>
+        {{ sepetOnayBekleyen[i].adet }}
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <div class="d-flex justify-content-end" style="font-weight: 500">
+          Toplam: $ {{ sepetFiyatiOnayBekleyen.toFixed(2) }}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br />

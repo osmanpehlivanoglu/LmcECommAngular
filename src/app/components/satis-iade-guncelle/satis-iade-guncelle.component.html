@@ -1,0 +1,61 @@
+<br />
+<table class="table table-hover">
+  <thead class="thead">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tarih</th>
+      <th scope="col">SatışId</th>
+      <th scope="col">Adet</th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="satisIadeler">
+    <tr
+      *ngFor="let satisiade of satisIadeler; let i = index"
+      (click)="hangiIndextekiSepet(i)"
+    >
+      <th scope="row" class="align-middle">
+        {{ i + 1 }}
+      </th>
+      <td class="align-middle">
+        {{ satisiade.tarih | date: "medium" }}
+      </td>
+      <td class="align-middle">
+        {{ satisiade.satisId }}
+      </td>
+      <td class="align-middle">
+        <div class="input-group mb-3 input-group-sm">
+          <input
+            type="number"
+            class="form-control"
+            aria-label="Example text with button addon"
+            aria-describedby="button-addon1"
+            [(ngModel)]="satisiade.adet"
+            (change)="guncel_adet($event)"
+            (click)="guncel_adet_oncesi($event)"
+            min="1"
+          />
+          <div
+            class="btn-group btn-group-sm"
+            role="group"
+            aria-label="Basic outlined example"
+          >
+            <button
+              (click)="guncelle(satisiade.satisIadeId)"
+              class="btn btn-outline-success btn-kucuk"
+            >
+              <i class="bi bi-arrow-repeat"></i>
+            </button>
+
+            <button
+              (click)="iptal(satisiade.satisIadeId)"
+              class="btn btn-outline-danger btn-kucuk"
+            >
+              <i class="bi bi-backspace"></i>
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

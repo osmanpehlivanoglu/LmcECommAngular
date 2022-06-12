@@ -1,0 +1,82 @@
+<br /><br />
+
+<div class="row text-center">
+  <h4>Resim İşlemleri</h4>
+</div>
+<br />
+<div class="row">
+  <div class="col-lg">
+    <form [formGroup]="resimFormUrun">
+      <div class="mb-3">
+        <input
+          type="number"
+          class="form-control visually-hidden"
+          aria-describedby="basic-addon1"
+          formControlName="urunId"
+        />
+
+        <label for="formFileMultiple" class="form-label"
+          >Ürününüz için birden fazla resim seçebilirsiniz...</label
+        >
+
+        <input
+          class="form-control"
+          type="file"
+          id="formFileMultiple"
+          formControlName="image"
+          multiple
+          (change)="onFileChange($event)"
+        />
+
+        <input
+          class="form-control visually-hidden"
+          type="text"
+          id="formFileMultiple"
+          formControlName="fileSource"
+          multiple
+        />
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row" style="margin-left: 0.5px; margin-right: 0.5px">
+  <button class="btn btn-primary" (click)="ekle()">Ekle</button>
+</div>
+<div *ngIf="eklendiMi" class="alert alert-success" role="alert">
+  {{ mesaj }}
+</div>
+
+<br />
+
+<div style="display: flex; flex-wrap: wrap">
+  <div
+    class="card add-img-card"
+    style="width: 33.3%; height: 400px"
+    *ngFor="let resim of urunResimleri"
+  >
+    <div
+      class="card-body"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      "
+    >
+      <img
+        [src]="resimUrl + resim.resimAdresi"
+        style="width: 100%; height: 90%; object-fit: contain"
+        class="card-img-top"
+        alt="..."
+      />
+      <button
+        class="btn btn-danger"
+        (click)="deleteResim(resim.resimId)"
+        style="width: 90%; height: 10%"
+      >
+        SİL
+      </button>
+    </div>
+  </div>
+</div>

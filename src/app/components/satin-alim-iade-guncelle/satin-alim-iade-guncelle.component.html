@@ -1,0 +1,59 @@
+<br />
+<table class="table table-hover">
+  <thead class="thead">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tarih</th>
+      <th scope="col">SatınAlımId</th>
+      <th scope="col">Adet</th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="satinAlimIadeler">
+    <tr *ngFor="let satinAlimIade of satinAlimIadeler; let i = index">
+      <th scope="row" class="align-middle">
+        {{ i + 1 }}
+      </th>
+      <td class="align-middle">
+        {{ satinAlimIade.tarih | date: "medium" }}
+      </td>
+      <td class="align-middle">
+        {{ satinAlimIade.satinAlimId }}
+      </td>
+      <td class="align-middle">
+        <div class="input-group mb-3 input-group-sm">
+          <input
+            type="number"
+            class="form-control"
+            aria-label="Example text with button addon"
+            aria-describedby="button-addon1"
+            [(ngModel)]="satinAlimIade.adet"
+            (change)="guncel_adet($event)"
+            (click)="guncel_adet_oncesi($event)"
+          />
+          <div
+            class="btn-group btn-group-sm"
+            role="group"
+            aria-label="Basic outlined example"
+          >
+            <button
+              (click)="guncelle(satinAlimIade.satinAlimIadeId)"
+              class="btn btn-outline-success btn-kucuk"
+            >
+              <i class="bi bi-bag-check"></i>
+            </button>
+
+            <button
+              (click)="iptal(satinAlimIade.satinAlimIadeId)"
+              class="btn btn-outline-success btn-kucuk"
+            >
+              <i class="bi bi-bag-check"></i>
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
